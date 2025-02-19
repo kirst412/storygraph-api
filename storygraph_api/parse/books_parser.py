@@ -25,9 +25,10 @@ class BooksParser:
         pattern = re.compile(r"Description<\/h4><div class=\"trix-content mt-3\">(.*?)<\/div>", re.DOTALL)
         match = pattern.search(desc)
         description = match.group(1).strip()
-        review_content = BooksScraper.community_reviews(book_id) 
+        review_content = BooksScraper.community_reviews(book_id)
         rev_soup = BeautifulSoup(review_content,'html.parser')
         avg_rating = rev_soup.find('span',class_="average-star-rating").text.strip()
+        warnings = BooksParser.content_warnings(book_id)
         data = {
                 'title':title,
                 'authors': authors,
@@ -35,9 +36,39 @@ class BooksParser:
                 'first_pub': first_pub,
                 'tags': tags,
                 'average_rating': avg_rating,
-                'description':description
+                'description':description,
+                'warnings': warnings
                 }
-        return data 
+        return data
+
+    @staticmethod
+    @parsing_exception
+    def content_warnings(book_id):
+        warnings_content = BooksScraper.content_warnings(book_id)
+        warnings_soup = BeautifulSoup(warnings_content,'html.parser')
+        user_warnings_pane = warnings_soup.find_all('div',class_='standard-pane')[1]
+        warnings_graphic = []
+        warnings_moderate = []
+        warnings_minor = []
+        warnings_list = warnings_graphic
+        for tag in user_warnings_pane.children:
+            if tag == '\n':
+                continue
+            if tag.name == 'p':
+                if tag.text == 'Graphic':
+                    warnings_list = warnings_graphic
+                elif tag.text == 'Moderate':
+                    warnings_list = warnings_moderate
+                elif tag.text == 'Minor':
+                    warnings_list = warnings_minor
+            elif tag.name == 'div':
+                warnings_list.append(tag.text)
+        warnings = {
+                'graphic': warnings_graphic,
+                'moderate': warnings_moderate,
+                'minor': warnings_minor
+                }
+        return warnings
 
     @staticmethod
     @parsing_exception
