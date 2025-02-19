@@ -51,6 +51,7 @@ class BooksParser:
         warnings_moderate = []
         warnings_minor = []
         warnings_list = warnings_graphic
+        tag_re = re.compile(r'^(.*) \((\d+)\)$')
         for tag in user_warnings_pane.children:
             if tag == '\n':
                 continue
@@ -62,7 +63,8 @@ class BooksParser:
                 elif tag.text == 'Minor':
                     warnings_list = warnings_minor
             elif tag.name == 'div':
-                warnings_list.append(tag.text)
+                match = tag_re.match(tag.text)
+                warnings_list.append((match[1], int(match[2])))
         warnings = {
                 'graphic': warnings_graphic,
                 'moderate': warnings_moderate,
