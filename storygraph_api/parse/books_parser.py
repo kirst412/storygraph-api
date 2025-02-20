@@ -12,8 +12,9 @@ class BooksParser:
         h3_tag = soup.find('h3',class_="font-serif font-bold text-2xl md:w-11/12")
         title = h3_tag.contents[0].strip()
         authors = []
-        for a in h3_tag.contents[1].find_all('a'):
-            authors.append(a.text)
+        for a in h3_tag.find_all('a'):
+            if a["href"].startswith("/authors"):
+                authors.append(a.text)
         p_tag = soup.find('p',class_="text-sm font-light text-darkestGrey dark:text-grey mt-1")
         pages = p_tag.contents[0].strip().split()[0]
         first_pub = p_tag.contents[1].find_all('span')[1].text.split()[2]
@@ -48,7 +49,10 @@ class BooksParser:
         books = soup.find_all('div', class_="book-title-author-and-series w-11/12")
         for book in books:
             title = book.find('a').text.strip()
-            author = book.find('p').text.strip()
+            for a in book.find_all('a'):
+                if a["href"].startswith('/author'):
+                    author = a.text.strip()
+                    break
             book_id = book.find('a')['href'].split('/')[-1]
             search_results.append({
                 'title': title,
