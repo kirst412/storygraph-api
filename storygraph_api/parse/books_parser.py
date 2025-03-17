@@ -65,7 +65,7 @@ class BooksParser:
                     warnings_list = warnings_minor
             elif tag.name == 'div':
                 match = tag_re.match(tag.text)
-                warnings_list.append((match[1], int(match[2])))
+                warnings_list.append(match[1])
         warnings = {
                 'graphic': warnings_graphic,
                 'moderate': warnings_moderate,
