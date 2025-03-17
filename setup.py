@@ -2,8 +2,8 @@ from setuptools import setup, find_packages
 
 setup(
     name="storygraph-api",
-    version="0.1.0",
-    description="This package allows you to interact and fetch data from the StoryGraph website.",
+    version="0.2.0",
+    description="This package allows you to interact with and fetch data from the StoryGraph website.",
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     author="ym496",

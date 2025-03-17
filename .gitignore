@@ -1,6 +1,7 @@
 # venv and env
 .story/
 .env
+venv/
 # python generated files
 __pycache__/
 *.pyc
