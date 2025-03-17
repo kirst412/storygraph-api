@@ -20,6 +20,11 @@ class BooksScraper:
         return BooksScraper.fetch_url(url)
 
     @staticmethod
+    def content_warnings(book_id):
+        url = f"https://app.thestorygraph.com/books/{book_id}/content_warnings"
+        return BooksScraper.fetch_url(url)
+
+    @staticmethod
     def search(query):
         formatted_query = query.replace(' ', '%20')
         url = f"https://app.thestorygraph.com/browse?search_term={formatted_query}"
