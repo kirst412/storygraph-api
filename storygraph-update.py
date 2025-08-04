@@ -1,5 +1,7 @@
 from dotenv import load_dotenv
 import os
+from storygraph_api import Book, User
+import json
 
 
 def main():
@@ -24,18 +26,21 @@ def main():
 
         print("\n--- 2. Testing User Client ---")
 
-        user_id = None
-        try:
-            print("\nFetching User ID for:", username)
-            user_id_json = user_client.get_user_id(username)
-            user_id_data = json.loads(user_id_json)
-            if "user_id" in user_id_data:
-                user_id = user_id_data["user_id"]
-                print(f"✅ Success! User ID found: {user_id}")
-            else:
-                print(f"⚠️ Could not extract user_id from response: {user_id_json}")
-        except Exception as e:
-            print(f"🛑 Error fetching user ID: {e}")
+        currently_reading = user_client.currently_reading(username, auth_cookies)
+        print(currently_reading)
+
+        # user_id = None
+        # try:
+        #     print("\nFetching User ID for:", username)
+        #     user_id_json = user_client.get_user_id(username)
+        #     user_id_data = json.loads(user_id_json)
+        #     if "user_id" in user_id_data:
+        #         user_id = user_id_data["user_id"]
+        #         print(f"✅ Success! User ID found: {user_id}")
+        #     else:
+        #         print(f"⚠️ Could not extract user_id from response: {user_id_json}")
+        # except Exception as e:
+        #     print(f"🛑 Error fetching user ID: {e}")
 
 
 if __name__ == '__main__':
