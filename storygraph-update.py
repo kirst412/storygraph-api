@@ -22,25 +22,27 @@ def main():
     
         book_client = Book()
         user_client = User()
-        print("✅ Setup complete.")
+        print("Setup complete.")
 
-        print("\n--- 2. Testing User Client ---")
+        print("\n--- 2. Retrieving currently reading list ---")
 
         currently_reading = user_client.currently_reading(username, auth_cookies)
-        print(currently_reading)
+        valid_date_entries = []        
 
-        # user_id = None
-        # try:
-        #     print("\nFetching User ID for:", username)
-        #     user_id_json = user_client.get_user_id(username)
-        #     user_id_data = json.loads(user_id_json)
-        #     if "user_id" in user_id_data:
-        #         user_id = user_id_data["user_id"]
-        #         print(f"✅ Success! User ID found: {user_id}")
-        #     else:
-        #         print(f"⚠️ Could not extract user_id from response: {user_id_json}")
-        # except Exception as e:
-        #     print(f"🛑 Error fetching user ID: {e}")
+        try:
+            print("\nFetching all journal entries...")
+            all_journal_entries = user_client.get_all_journal_entries(auth_cookies)
+            all_journal_data = json.loads(all_journal_entries)
+            if isinstance(all_journal_data, list):
+                for entry in all_journal_data:
+                    if entry['date'] != "No date":
+                        valid_date_entries.append(entry)
+            else:
+                print(f"Error: All journal entries not returned as a list.")
+        except Exception as e:
+            print(f"Error fetching all journal entries: {e}")
+
+        print(valid_date_entries)
 
 
 if __name__ == '__main__':
