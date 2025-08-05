@@ -79,8 +79,8 @@ def main():
 
         try:
             print("\nFetching all journal entries...")
-            print(all_journal_entries)
             all_journal_entries = user_client.get_all_journal_entries(auth_cookies)
+            print(all_journal_entries)
             all_journal_data = json.loads(all_journal_entries)
             if isinstance(all_journal_data, list):
                 for entry in all_journal_data:
