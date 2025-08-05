@@ -82,6 +82,7 @@ def main():
             all_journal_data = json.loads(all_journal_entries)
             if isinstance(all_journal_data, list):
                 for entry in all_journal_data:
+                    print(entry)
                     if entry['date'] != "No date":
                         valid_date_entries.append(entry)
             else:
@@ -89,6 +90,8 @@ def main():
         except Exception as e:
             print(f"Error fetching all journal entries: {e}")
 
+        print(len(valid_date_entries))
+        
         for entry in valid_date_entries:
             book_title = entry['book_title']
             book_id = entry['book_id']
