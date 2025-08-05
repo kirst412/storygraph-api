@@ -101,6 +101,7 @@ def main():
             author = ", ".join(book_info['authors']) # type: ignore
             existing_entry = entry_exists(client, database_id, book_title, author, clean_date, progress_percent)
             if not existing_entry:
+                print(f"creating new entry for {book_title}")
                 create_entry(client, database_id, book_title, author, clean_date, progress_percent)
 
 
