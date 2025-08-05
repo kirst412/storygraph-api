@@ -104,7 +104,7 @@ def main():
                 print(f"creating new entry for {book_title}")
                 create_entry(client, database_id, book_title, author, clean_date, progress_percent)
             else:
-                print("entry already exists"
+                print("entry already exists")
 
 
 if __name__ == '__main__':
