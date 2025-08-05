@@ -74,15 +74,16 @@ def main():
         print("\n--- 2. Retrieving currently reading list ---")
 
         currently_reading = user_client.currently_reading(username, auth_cookies)
+        print(currently_reading)
         valid_date_entries = []        
 
         try:
             print("\nFetching all journal entries...")
+            print(all_journal_entries)
             all_journal_entries = user_client.get_all_journal_entries(auth_cookies)
             all_journal_data = json.loads(all_journal_entries)
             if isinstance(all_journal_data, list):
                 for entry in all_journal_data:
-                    print(entry)
                     if entry['date'] != "No date":
                         valid_date_entries.append(entry)
             else:
