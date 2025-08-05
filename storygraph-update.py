@@ -56,7 +56,7 @@ def main():
     remember_token = os.getenv("REMEMBER_USER_TOKEN")
 
     if not all([username, session_cookie, remember_token]):
-        print("🛑 Error: Missing one or more required environment variables.")
+        print("Error: Missing one or more required environment variables.")
         print("Please ensure _STORYGRAPH_SESSION, REMEMBER_USER_TOKEN, and STORYGRAPH_USERNAME are in your .env file.")
     else:
         auth_cookies = {
@@ -103,6 +103,8 @@ def main():
             if not existing_entry:
                 print(f"creating new entry for {book_title}")
                 create_entry(client, database_id, book_title, author, clean_date, progress_percent)
+            else:
+                print("entry already exists"
 
 
 if __name__ == '__main__':
